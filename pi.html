@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,41 +7,72 @@
 <style>
   body {
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(120deg, #1c1c1c, #3a1c71);
+    background: radial-gradient(circle at center, #1a1a2e, #16213e);
     color: white;
     text-align: center;
     margin: 0;
     padding: 30px;
+    overflow-x: hidden;
+  }
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+  input, button {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+  }
+  input {
+    width: 100px;
+    text-align: center;
+  }
+  button {
+    background: #00b4d8;
+    color: white;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0096c7;
   }
   #piDisplay {
     background: rgba(255,255,255,0.1);
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Courier New", monospace;
+    font-size: 1.2em;
     word-wrap: break-word;
   }
-  canvas {
-    margin-top: 30px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 12px;
+  .pi-symbol {
+    position: fixed;
+    top: -50px;
+    right: -50px;
+    font-size: 200px;
+    color: rgba(255,255,255,0.05);
+    animation: spin 30s linear infinite;
+  }
+  @keyframes spin {
+    100% { transform: rotate(360deg); }
   }
 </style>
 </head>
 <body>
+  <div class="pi-symbol">π</div>
   <h1>Pi Digits Viewer</h1>
-  <p>Enter how many digits of π you want to see:</p>
-  <input id="digits" type="number" min="1" max="500" value="20">
+  <p>Enter how many digits of π you want to see (1–1000):</p>
+  <input id="digits" type="number" min="1" max="1000" value="20">
   <button onclick="showPi()">Show</button>
   <div id="piDisplay"></div>
   <canvas id="circle" width="300" height="300"></canvas>
-  <p>Fun Fact: π never ends or repeats — it’s an irrational number!</p>
+  <p>π (Pi) is the ratio of a circle’s circumference to its diameter — and it never ends or repeats.</p>
 
   <script>
-    const PI_STR = Math.PI.toString().slice(0,502);
-    function showPi(){
-      let n = parseInt(document.getElementById('digits').value);
-      document.getElementById('piDisplay').textContent = PI_STR.slice(0, n+2);
-    }
     const c = document.getElementById('circle');
     const ctx = c.getContext('2d');
     ctx.strokeStyle = 'white';
@@ -54,6 +84,17 @@
     ctx.moveTo(50,150);
     ctx.lineTo(250,150);
     ctx.stroke();
+
+    async function showPi(){
+      let n = parseInt(document.getElementById('digits').value);
+      if (!n || n < 1 || n > 1000) {
+        alert("Enter a number between 1 and 1000");
+        return;
+      }
+      const response = await fetch("https://api.pi.delivery/v1/pi?start=0&numberOfDigits="+n);
+      const data = await response.json();
+      document.getElementById('piDisplay').textContent = "π = " + data.content;
+    }
   </script>
 </body>
 </html>
