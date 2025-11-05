@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prime Number Explorer</title>
+<style>
+  body {
+    background: radial-gradient(circle, #0f0f0f, #111);
+    color: #0f0;
+    text-align: center;
+    font-family: "Consolas", monospace;
+  }
+  input, button {
+    padding: 10px;
+    margin: 10px;
+    background: #111;
+    border: 1px solid #0f0;
+    color: #0f0;
+    border-radius: 6px;
+  }
+  #output { margin-top: 20px; white-space: pre-line; }
+</style>
+</head>
+<body>
+<h1>Prime Number Explorer</h1>
+<p>Enter a number to check if it's prime:</p>
+<input id="num" type="number" min="1" placeholder="Enter number">
+<button onclick="checkPrime()">Check</button>
+<div id="output"></div>
+
+<script>
+function isPrime(n) {
+  if (n < 2) return false;
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}
+function checkPrime() {
+  let n = parseInt(document.getElementById('num').value);
+  let out = document.getElementById('output');
+  if (!n) return;
+  if (isPrime(n)) out.textContent = `${n} is a Prime Number.`;
+  else {
+    let factors = [];
+    for (let i=2;i<n;i++) if(n%i===0) factors.push(i);
+    out.textContent = `${n} is NOT prime.\nFactors: ${factors.join(", ")}`;
+  }
+}
+</script>
+</body>
+</html>
