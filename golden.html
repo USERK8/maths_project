@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Ratio Visualizer</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #000428, #004e92);
+    color: gold;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+  }
+  canvas {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+  }
+</style>
+</head>
+<body>
+  <h1>Golden Ratio (φ = 1.618...)</h1>
+  <p>The Golden Ratio appears in art, architecture, and nature — it’s pure mathematical beauty!</p>
+  <canvas id="golden" width="500" height="500"></canvas>
+
+  <script>
+    const ctx = golden.getContext('2d');
+    let a = 300, b = a / 1.618;
+    ctx.strokeStyle = 'gold';
+    ctx.lineWidth = 2;
+    let x = 100, y = 100;
+    for(let i=0;i<8;i++){
+      ctx.strokeRect(x,y,a,b);
+      x += (a - b);
+      [a,b] = [b,a-b];
+    }
+    let angle = 0;
+    function drawSpiral(){
+      ctx.beginPath();
+      ctx.arc(350,250,150,angle,angle+Math.PI/2);
+      ctx.stroke();
+      angle += 0.02;
+      requestAnimationFrame(drawSpiral);
+    }
+    drawSpiral();
+  </script>
+</body>
+</html>
