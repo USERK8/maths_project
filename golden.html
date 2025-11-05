@@ -10,39 +10,80 @@
     color: gold;
     text-align: center;
     font-family: "Poppins", sans-serif;
+    overflow-x: hidden;
+  }
+  h1 {
+    margin-top: 30px;
+    font-size: 2.2em;
+  }
+  .spiral-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: 40px auto;
   }
   canvas {
-    margin-top: 20px;
-    background: rgba(255,255,255,0.05);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+  }
+  .gallery img {
+    width: 200px;
+    height: 200px;
     border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid gold;
+    transition: transform 0.3s ease;
+  }
+  .gallery img:hover {
+    transform: scale(1.1);
   }
 </style>
 </head>
 <body>
-  <h1>Golden Ratio (φ = 1.618...)</h1>
-  <p>The Golden Ratio appears in art, architecture, and nature — it’s pure mathematical beauty!</p>
-  <canvas id="golden" width="500" height="500"></canvas>
+  <h1>The Golden Ratio (φ ≈ 1.618)</h1>
+  <p>Nature, art, and architecture are full of the golden ratio — a pattern of perfection.</p>
+  <div class="spiral-container">
+    <canvas id="spiral" width="400" height="400"></canvas>
+  </div>
+
+  <div class="gallery">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/NautilusCutawayLogarithmicSpiral.jpg/800px-NautilusCutawayLogarithmicSpiral.jpg" alt="Nautilus shell">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Sunflower_flower.jpg/800px-Sunflower_flower.jpg" alt="Sunflower pattern">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Parthenon_from_west.jpg/800px-Parthenon_from_west.jpg" alt="Parthenon">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Fibonacci_spiral_34.svg/800px-Fibonacci_spiral_34.svg.png" alt="Golden Spiral">
+  </div>
 
   <script>
-    const ctx = golden.getContext('2d');
-    let a = 300, b = a / 1.618;
+    const canvas = document.getElementById('spiral');
+    const ctx = canvas.getContext('2d');
+    let phi = 1.618;
     ctx.strokeStyle = 'gold';
     ctx.lineWidth = 2;
-    let x = 100, y = 100;
-    for(let i=0;i<8;i++){
-      ctx.strokeRect(x,y,a,b);
-      x += (a - b);
-      [a,b] = [b,a-b];
-    }
-    let angle = 0;
-    function drawSpiral(){
+    ctx.translate(200,200);
+
+    function drawGoldenSpiral() {
+      ctx.clearRect(-200, -200, 400, 400);
+      let a = 2, angle = 0;
       ctx.beginPath();
-      ctx.arc(350,250,150,angle,angle+Math.PI/2);
+      for (let i=0; i<2000; i++) {
+        let r = a * Math.pow(phi, angle / (Math.PI*2));
+        let x = r * Math.cos(angle);
+        let y = r * Math.sin(angle);
+        ctx.lineTo(x, y);
+        angle += 0.05;
+      }
       ctx.stroke();
-      angle += 0.02;
-      requestAnimationFrame(drawSpiral);
+      requestAnimationFrame(drawGoldenSpiral);
     }
-    drawSpiral();
+    drawGoldenSpiral();
   </script>
 </body>
 </html>
