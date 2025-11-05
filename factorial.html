@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fractal Tree</title>
+<style>
+  body {
+    background: radial-gradient(circle, #00111a, #000);
+    color: white;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+  }
+  canvas {
+    background: rgba(255,255,255,0.05);
+    margin-top: 20px;
+    border-radius: 12px;
+  }
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: white;
+    color: #00111a;
+    border-radius: 6px;
+  }
+</style>
+</head>
+<body>
+<h1>Fractal Tree Generator</h1>
+<canvas id="tree" width="500" height="500"></canvas>
+<br><button onclick="drawTree()">Regrow</button>
+
+<script>
+const ctx = tree.getContext('2d');
+function branch(x, y, len, angle, width){
+  ctx.lineWidth = width;
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+  const xEnd = x + Math.cos(angle)*len;
+  const yEnd = y - Math.sin(angle)*len;
+  ctx.lineTo(xEnd,yEnd);
+  ctx.stroke();
+  if(len<10) return;
+  branch(xEnd, yEnd, len*0.7, angle + Math.random()*0.5, width*0.7);
+  branch(xEnd, yEnd, len*0.7, angle - Math.random()*0.5, width*0.7);
+}
+function drawTree(){
+  ctx.clearRect(0,0,500,500);
+  ctx.strokeStyle = 'lime';
+  branch(250,480,80,-Math.PI/2,8);
+}
+drawTree();
+</script>
+</body>
+</html>
