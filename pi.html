@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pi Digits Viewer</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(120deg, #1c1c1c, #3a1c71);
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 30px;
+  }
+  #piDisplay {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    word-wrap: break-word;
+  }
+  canvas {
+    margin-top: 30px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+  }
+</style>
+</head>
+<body>
+  <h1>Pi Digits Viewer</h1>
+  <p>Enter how many digits of π you want to see:</p>
+  <input id="digits" type="number" min="1" max="500" value="20">
+  <button onclick="showPi()">Show</button>
+  <div id="piDisplay"></div>
+  <canvas id="circle" width="300" height="300"></canvas>
+  <p>Fun Fact: π never ends or repeats — it’s an irrational number!</p>
+
+  <script>
+    const PI_STR = Math.PI.toString().slice(0,502);
+    function showPi(){
+      let n = parseInt(document.getElementById('digits').value);
+      document.getElementById('piDisplay').textContent = PI_STR.slice(0, n+2);
+    }
+    const c = document.getElementById('circle');
+    const ctx = c.getContext('2d');
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(150,150,100,0,Math.PI*2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(50,150);
+    ctx.lineTo(250,150);
+    ctx.stroke();
+  </script>
+</body>
+</html>
