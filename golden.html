@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Golden Ratio Visualizer</title>
+<title>The Golden Ratio</title>
 <style>
   body {
     background: linear-gradient(135deg, #000428, #004e92);
@@ -16,16 +16,9 @@
     margin-top: 30px;
     font-size: 2.2em;
   }
-  .spiral-container {
-    position: relative;
-    width: 400px;
-    height: 400px;
-    margin: 40px auto;
-  }
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
+  p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
   }
   .gallery {
     display: flex;
@@ -35,8 +28,8 @@
     margin-top: 40px;
   }
   .gallery img {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border-radius: 12px;
     object-fit: cover;
     border: 2px solid gold;
@@ -49,41 +42,15 @@
 </head>
 <body>
   <h1>The Golden Ratio (φ ≈ 1.618)</h1>
-  <p>Nature, art, and architecture are full of the golden ratio — a pattern of perfection.</p>
-  <div class="spiral-container">
-    <canvas id="spiral" width="400" height="400"></canvas>
-  </div>
+  <p>The Golden Ratio, also known as φ (phi), is a mathematical constant that appears in various aspects of nature, art, architecture, and design. Its unique and aesthetically pleasing proportions are often described as the "perfect" ratio. It has been admired for centuries and is considered a symbol of harmony and beauty.</p>
 
   <div class="gallery">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/NautilusCutawayLogarithmicSpiral.jpg/800px-NautilusCutawayLogarithmicSpiral.jpg" alt="Nautilus shell">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Sunflower_flower.jpg/800px-Sunflower_flower.jpg" alt="Sunflower pattern">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Parthenon_from_west.jpg/800px-Parthenon_from_west.jpg" alt="Parthenon">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Fibonacci_spiral_34.svg/800px-Fibonacci_spiral_34.svg.png" alt="Golden Spiral">
+    <img src="grs.jpg" alt="Golden Ratio Descriptive Image">
+    <img src="mgs.jpg" alt="Milky Way Galaxy with Golden Ratio">
+    <img src="pgs.jpg" alt="Pyramid of Giza with the Golden Ratio">
+    <img src="sss.jpg" alt="Snail Shell with Golden Ratio">
+    <img src="tms.jpg" alt="Taj Mahal with Golden Ratio">
   </div>
 
-  <script>
-    const canvas = document.getElementById('spiral');
-    const ctx = canvas.getContext('2d');
-    let phi = 1.618;
-    ctx.strokeStyle = 'gold';
-    ctx.lineWidth = 2;
-    ctx.translate(200,200);
-
-    function drawGoldenSpiral() {
-      ctx.clearRect(-200, -200, 400, 400);
-      let a = 2, angle = 0;
-      ctx.beginPath();
-      for (let i=0; i<2000; i++) {
-        let r = a * Math.pow(phi, angle / (Math.PI*2));
-        let x = r * Math.cos(angle);
-        let y = r * Math.sin(angle);
-        ctx.lineTo(x, y);
-        angle += 0.05;
-      }
-      ctx.stroke();
-      requestAnimationFrame(drawGoldenSpiral);
-    }
-    drawGoldenSpiral();
-  </script>
 </body>
 </html>
