@@ -5,50 +5,152 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pythagoras Theorem Visualizer</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  
   body {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
     color: white;
     font-family: "Poppins", sans-serif;
     text-align: center;
     margin: 0;
     padding: 20px;
+    overflow-x: hidden;
   }
-  canvas {
-    background: rgba(255,255,255,0.1);
-    border-radius: 12px;
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px #00bcd4, 0 0 20px #0097a7; }
+    to { text-shadow: 0 0 25px #26c6da, 0 0 40px #00bcd4; }
+  }
+
+  p {
+    font-size: 1.2em;
+    color: #ddd;
+  }
+
+  .controls {
     margin-top: 20px;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 12px;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
   }
-  input { margin: 10px; width: 80px; }
+
+  input {
+    margin: 10px;
+    width: 80px;
+    padding: 5px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    text-align: center;
+  }
+
+  button {
+    background: #00bcd4;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: white;
+    color: #0f2027;
+    transform: scale(1.05);
+  }
+
+  #result {
+    font-size: 1.2em;
+    margin-top: 15px;
+  }
+
+  canvas {
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    margin-top: 25px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.15);
+  }
+
+  footer {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #aaa;
+    opacity: 0.8;
+  }
 </style>
 </head>
 <body>
   <h1>Pythagoras Theorem Visualizer</h1>
   <p>a² + b² = c²</p>
-  <div>
+  <div class="controls">
     a: <input id="a" type="number" value="3" min="1"> 
     b: <input id="b" type="number" value="4" min="1">
     <button onclick="draw()">Calculate</button>
   </div>
   <p id="result"></p>
   <canvas id="canvas" width="400" height="400"></canvas>
+  <footer>© 2025 Interactive Math Lab</footer>
 
   <script>
+    const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+
     function draw() {
       let a = parseFloat(document.getElementById('a').value);
       let b = parseFloat(document.getElementById('b').value);
       let c = Math.sqrt(a*a + b*b).toFixed(2);
+
       document.getElementById('result').textContent = `c = √(${a}² + ${b}²) = ${c}`;
+
       ctx.clearRect(0,0,400,400);
+
+      // Draw glowing triangle
+      const startX = 80;
+      const startY = 350;
+
       ctx.beginPath();
-      ctx.moveTo(50,350);
-      ctx.lineTo(50,350 - b*20);
-      ctx.lineTo(50 + a*20,350);
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(startX, startY - b*20);
+      ctx.lineTo(startX + a*20, startY);
       ctx.closePath();
-      ctx.strokeStyle = "white";
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#00eaff";
+      ctx.lineWidth = 3;
+      ctx.shadowColor = "#00eaff";
+      ctx.shadowBlur = 15;
       ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      // Label sides
+      ctx.fillStyle = "#fff";
+      ctx.font = "16px Poppins";
+      ctx.fillText(`a = ${a}`, startX + a*10 - 20, startY + 25);
+      ctx.fillText(`b = ${b}`, startX - 60, startY - b*10);
+      ctx.fillText(`c = ${c}`, startX + a*10, startY - b*10 - 10);
+
+      // Right-angle marker
+      ctx.beginPath();
+      ctx.moveTo(startX, startY);
+      ctx.lineTo(startX + 20, startY);
+      ctx.lineTo(startX + 20, startY - 20);
+      ctx.lineTo(startX, startY - 20);
+      ctx.closePath();
+      ctx.fillStyle = "rgba(255,255,255,0.5)";
+      ctx.fill();
     }
+
     draw();
   </script>
 </body>
