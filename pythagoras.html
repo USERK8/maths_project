@@ -149,17 +149,21 @@
       let b = parseFloat(document.getElementById('b').value);
       let c = Math.sqrt(a * a + b * b).toFixed(2);
       result.style.opacity = 0;
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // scaling adjustment
+      // scaling & centering
       const maxSide = Math.max(a, b);
       const scale = 300 / (maxSide + 2);
-      const offsetX = 50, offsetY = 370;
+
+      // find offset so the triangle is centered
+      const triWidth = a * scale;
+      const triHeight = b * scale;
+      const offsetX = (canvas.width - triWidth) / 2;
+      const offsetY = (canvas.height + triHeight) / 2;
 
       const A = {x: offsetX, y: offsetY};
-      const B = {x: offsetX, y: offsetY - b * scale};
-      const C = {x: offsetX + a * scale, y: offsetY};
+      const B = {x: offsetX, y: offsetY - triHeight};
+      const C = {x: offsetX + triWidth, y: offsetY};
 
       const totalFrames = 90;
       let frame = 0;
@@ -180,26 +184,19 @@
         ctx.shadowColor = "#00eaff";
         ctx.shadowBlur = 15;
 
-        // Always redraw finished sides
-        if (frame >= totalFrames / 3) {
-          drawSide(A, B, 1);
-        } else {
-          drawSide(A, B, frame / (totalFrames / 3));
-        }
+        if (frame >= totalFrames / 3) drawSide(A, B, 1);
+        else drawSide(A, B, frame / (totalFrames / 3));
 
-        if (frame >= (2 * totalFrames) / 3) {
-          drawSide(B, C, 1);
-        } else if (frame > totalFrames / 3) {
+        if (frame >= (2 * totalFrames) / 3) drawSide(B, C, 1);
+        else if (frame > totalFrames / 3)
           drawSide(B, C, (frame - totalFrames / 3) / (totalFrames / 3));
-        }
 
         if (frame >= totalFrames) {
           drawSide(C, A, 1);
           labelSides(a, b, c, A, B, C);
           return;
-        } else if (frame > (2 * totalFrames) / 3) {
+        } else if (frame > (2 * totalFrames) / 3)
           drawSide(C, A, (frame - (2 * totalFrames) / 3) / (totalFrames / 3));
-        }
 
         frame++;
         requestAnimationFrame(animate);
@@ -215,7 +212,6 @@
       ctx.fillText(`a = ${a}`, (A.x + C.x) / 2 - 20, A.y + 25);
       ctx.fillText(`b = ${b}`, A.x - 55, (A.y + B.y) / 2);
       ctx.fillText(`c = ${c}`, (B.x + C.x) / 2 - 10, (B.y + C.y) / 2 - 10);
-
       result.textContent = `c = √(${a}² + ${b}²) = ${c}`;
       result.style.opacity = 1;
     }
