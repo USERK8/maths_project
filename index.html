@@ -1,100 +1,174 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maths Projects</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cool Maths Projects</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      background: linear-gradient(-45deg, #1b004b, #4b0082, #1f1c2c, #3a0ca3);
-      background-size: 400% 400%;
-      animation: gradientMove 10s ease infinite;
-      color: white;
-      text-align: center;
-      overflow-x: hidden;
-    }
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    text-align: center;
+    background: radial-gradient(circle at 20% 20%, #2a004f, #0f0c29, #302b63, #24243e);
+    background-size: 300% 300%;
+    animation: backgroundFlow 12s ease infinite;
+    overflow-x: hidden;
+  }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  @keyframes backgroundFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    header {
-      padding: 60px 20px 10px;
-      font-size: 3em;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-      animation: glow 2s ease-in-out infinite alternate;
-    }
+  header {
+    padding: 70px 20px 15px;
+    font-size: 3em;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    animation: titleGlow 3s ease-in-out infinite alternate;
+  }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #a855f7, 0 0 20px #9333ea; }
-      to { text-shadow: 0 0 20px #c084fc, 0 0 40px #a855f7; }
-    }
+  @keyframes titleGlow {
+    from { text-shadow: 0 0 15px #a855f7, 0 0 25px #9333ea; }
+    to { text-shadow: 0 0 25px #c084fc, 0 0 50px #a855f7; }
+  }
 
-    p {
-      width: 80%;
-      margin: auto;
-      font-size: 1.25em;
-      color: #ddd;
-      max-width: 700px;
-      line-height: 1.6;
-    }
+  p.intro {
+    width: 85%;
+    margin: auto;
+    font-size: 1.25em;
+    color: #ddd;
+    max-width: 750px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 50px;
-      gap: 25px;
-      padding-bottom: 60px;
-    }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding-bottom: 60px;
+  }
 
-    .btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid #fff;
-      color: white;
-      padding: 18px 50px;
-      border-radius: 14px;
-      font-size: 1.2em;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
-      backdrop-filter: blur(4px);
-    }
+  .btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255,255,255,0.4);
+    color: white;
+    padding: 18px 50px;
+    border-radius: 14px;
+    font-size: 1.2em;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+  }
 
-    .btn:hover {
-      background: white;
-      color: #1b004b;
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 0 25px white;
-    }
+  .btn:hover {
+    background: white;
+    color: #1b004b;
+    transform: translateY(-6px) scale(1.06);
+    box-shadow: 0 0 25px rgba(255,255,255,0.7);
+  }
 
-    footer {
-      font-size: 0.9em;
-      color: #aaa;
-      margin-bottom: 30px;
-      opacity: 0.7;
-    }
-  </style>
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, transparent 10.01%);
+    background-size: 20px 20px;
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.6s;
+  }
+
+  .btn:hover::before {
+    opacity: 0.2;
+  }
+
+  /* Tooltip styles */
+  .tooltip {
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 0.9em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .btn:hover .tooltip {
+    opacity: 1;
+    transform: translate(-50%, -10px);
+  }
+
+  footer {
+    font-size: 0.9em;
+    color: #aaa;
+    margin-bottom: 30px;
+    opacity: 0.7;
+  }
+
+  /* Floating animation for subtle movement */
+  @keyframes floaty {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .btn {
+    animation: floaty 5s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.5s);
+  }
+</style>
 </head>
 <body>
   <header>Cool Maths Projects ✨</header>
-  <p>Dive into the beauty of numbers, geometry, and patterns that shape our universe. Choose a project and see how math turns imagination into logic.</p>
   
+  <p class="intro">
+    Mathematics isn’t just numbers on paper — it’s the rhythm of the universe.  
+    From the symmetry of snowflakes to the infinite digits of π, math is art, logic, and imagination in motion.  
+    Explore the projects below to see how equations turn into experiences.
+  </p>
+
   <div class="container">
-    <a class="btn" href="pythagoras.html">Pythagoras Theorem</a>
-    <a class="btn" href="primes.html">Prime Explorer</a>
-    <a class="btn" href="pi.html">Pi Digits Viewer</a>
-    <a class="btn" href="golden.html">Golden Ratio</a>
+    <a class="btn" href="pythagoras.html" style="--i:1;">
+      Pythagoras Theorem
+      <span class="tooltip">Visualize how a² + b² = c² forms a perfect right triangle.</span>
+    </a>
+    <a class="btn" href="primes.html" style="--i:2;">
+      Prime Explorer
+      <span class="tooltip">Uncover the mystery of numbers divisible only by themselves and 1.</span>
+    </a>
+    <a class="btn" href="pi.html" style="--i:3;">
+      Pi Digits Viewer
+      <span class="tooltip">Watch π unfold — a never-ending story of circles and infinity.</span>
+    </a>
+    <a class="btn" href="golden.html" style="--i:4;">
+      Golden Ratio
+      <span class="tooltip">Discover the divine proportion behind art, nature, and harmony.</span>
+    </a>
   </div>
+
+  <footer>© 2025 Maths Magic | Where logic meets imagination</footer>
+</body>
+</html>
 
   <footer>© 2025 Maths Magic | Built with curiosity</footer>
 </body>
