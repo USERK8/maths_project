@@ -35,46 +35,70 @@
   }
 
   .controls {
-    margin-top: 20px;
-    background: rgba(255,255,255,0.1);
-    padding: 15px;
-    border-radius: 12px;
-    display: inline-block;
-    box-shadow: 0 0 10px rgba(255,255,255,0.1);
-    backdrop-filter: blur(5px);
+    margin-top: 25px;
+    background: rgba(255,255,255,0.08);
+    padding: 20px 30px;
+    border-radius: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  label {
+    font-size: 0.9em;
+    color: #ccc;
+    margin-bottom: 5px;
   }
 
   input {
-    margin: 10px;
-    width: 80px;
-    padding: 5px;
-    border-radius: 6px;
-    border: none;
-    outline: none;
+    width: 90px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: white;
     font-size: 1em;
     text-align: center;
+    outline: none;
+    transition: 0.3s;
+  }
+
+  input:focus {
+    border-color: #00bcd4;
+    box-shadow: 0 0 10px #00bcd4;
   }
 
   button {
-    background: #00bcd4;
+    background: linear-gradient(90deg, #00bcd4, #26c6da);
     border: none;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 1em;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    font-weight: 600;
   }
 
   button:hover {
     background: white;
     color: #0f2027;
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(255,255,255,0.4);
   }
 
   #result {
     font-size: 1.2em;
-    margin-top: 15px;
+    margin-top: 20px;
     opacity: 0;
     transition: opacity 1s ease;
   }
@@ -82,7 +106,7 @@
   canvas {
     background: rgba(255,255,255,0.05);
     border-radius: 15px;
-    margin-top: 25px;
+    margin-top: 30px;
     box-shadow: 0 0 20px rgba(255,255,255,0.15);
   }
 
@@ -97,13 +121,22 @@
 <body>
   <h1>Pythagoras Theorem Visualizer</h1>
   <p>a² + b² = c²</p>
+
   <div class="controls">
-    a: <input id="a" type="number" value="3" min="1"> 
-    b: <input id="b" type="number" value="4" min="1">
-    <button onclick="drawAnimated()">Calculate</button>
+    <div class="input-group">
+      <label for="a">Side a</label>
+      <input id="a" type="number" value="3" min="1"> 
+    </div>
+    <div class="input-group">
+      <label for="b">Side b</label>
+      <input id="b" type="number" value="4" min="1">
+    </div>
+    <button onclick="drawAnimated()">Visualize</button>
   </div>
+
   <p id="result"></p>
-  <canvas id="canvas" width="400" height="400"></canvas>
+  <canvas id="canvas" width="420" height="420"></canvas>
+
   <footer>© 2025 Interactive Math Lab</footer>
 
   <script>
@@ -114,83 +147,71 @@
     function drawAnimated() {
       let a = parseFloat(document.getElementById('a').value);
       let b = parseFloat(document.getElementById('b').value);
-      let c = Math.sqrt(a*a + b*b).toFixed(2);
+      let c = Math.sqrt(a * a + b * b).toFixed(2);
       result.style.opacity = 0;
 
-      ctx.clearRect(0, 0, 400, 400);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const startX = 80, startY = 350;
-      const points = [
-        {x: startX, y: startY},
-        {x: startX, y: startY - b * 20},
-        {x: startX + a * 20, y: startY}
-      ];
+      // scaling adjustment to fit
+      const maxSide = Math.max(a, b);
+      const scale = 300 / (maxSide + 2);
+      const offsetX = 50, offsetY = 350;
 
-      let progress = 0;
-      const totalFrames = 120;
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = "#00eaff";
-      ctx.shadowColor = "#00eaff";
+      const A = {x: offsetX, y: offsetY};
+      const B = {x: offsetX, y: offsetY - b * scale};
+      const C = {x: offsetX + a * scale, y: offsetY};
+
+      const totalFrames = 90;
+      let frame = 0;
 
       function animate() {
-        ctx.clearRect(0, 0, 400, 400);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
-        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#00eaff";
+        ctx.shadowColor = "#00eaff";
+        ctx.shadowBlur = 15;
 
-        if (progress < totalFrames / 3) {
-          // Draw vertical side
-          const t = progress / (totalFrames / 3);
-          const y = points[0].y - b * 20 * t;
-          ctx.lineTo(points[0].x, y);
-        } else if (progress < (2 * totalFrames) / 3) {
-          // Draw base side
-          ctx.lineTo(points[1].x, points[1].y);
-          const t = (progress - totalFrames / 3) / (totalFrames / 3);
-          const x = points[1].x + a * 20 * t;
-          ctx.lineTo(x, points[1].y);
+        // Draw sides progressively
+        if (frame < totalFrames / 3) {
+          const t = frame / (totalFrames / 3);
+          ctx.moveTo(A.x, A.y);
+          ctx.lineTo(A.x, A.y - b * scale * t);
+        } else if (frame < (2 * totalFrames) / 3) {
+          ctx.moveTo(A.x, A.y);
+          ctx.lineTo(B.x, B.y);
+          const t = (frame - totalFrames / 3) / (totalFrames / 3);
+          ctx.lineTo(B.x + a * scale * t, B.y);
         } else {
-          // Complete triangle
-          ctx.lineTo(points[1].x, points[1].y);
-          ctx.lineTo(points[2].x, points[2].y);
-          const t = (progress - (2 * totalFrames) / 3) / (totalFrames / 3);
-          ctx.lineTo(points[0].x * (1 - t) + points[2].x * t, points[0].y * (1 - t) + points[2].y * t);
+          ctx.moveTo(A.x, A.y);
+          ctx.lineTo(B.x, B.y);
+          ctx.lineTo(C.x, C.y);
+          const t = (frame - (2 * totalFrames) / 3) / (totalFrames / 3);
+          ctx.lineTo(A.x * (1 - t) + C.x * t, A.y * (1 - t) + C.y * t);
         }
 
         ctx.stroke();
-        progress++;
+        ctx.shadowBlur = 0;
 
-        if (progress <= totalFrames) {
+        frame++;
+        if (frame <= totalFrames) {
           requestAnimationFrame(animate);
         } else {
-          drawLabels(a, b, c, points);
+          labelSides(a, b, c, A, B, C);
         }
       }
       animate();
     }
 
-    function drawLabels(a, b, c, points) {
-      const startX = points[0].x;
-      const startY = points[0].y;
-      const aMidX = startX + (points[2].x - startX) / 2;
-      const bMidY = startY - (startY - points[1].y) / 2;
-      const cMidX = startX + (points[2].x - startX) / 2;
-      const cMidY = startY - (startY - points[1].y) / 2;
-
-      ctx.shadowBlur = 15;
-      ctx.strokeStyle = "#00eaff";
-      ctx.stroke();
-
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = "#fff";
+    function labelSides(a, b, c, A, B, C) {
       ctx.font = "16px Poppins";
+      ctx.fillStyle = "white";
+      ctx.fillText(`a = ${a}`, (A.x + C.x) / 2 - 20, A.y + 25);
+      ctx.fillText(`b = ${b}`, A.x - 55, (A.y + B.y) / 2);
+      ctx.fillText(`c = ${c}`, (B.x + C.x) / 2 - 10, (B.y + C.y) / 2 - 10);
 
-      setTimeout(() => {
-        ctx.fillText(`a = ${a}`, aMidX - 15, startY + 25);
-        ctx.fillText(`b = ${b}`, startX - 60, bMidY);
-        ctx.fillText(`c = ${c}`, cMidX, cMidY - 10);
-        result.textContent = `c = √(${a}² + ${b}²) = ${c}`;
-        result.style.opacity = 1;
-      }, 400);
+      result.textContent = `c = √(${a}² + ${b}²) = ${c}`;
+      result.style.opacity = 1;
     }
 
     drawAnimated();
