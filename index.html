@@ -1,175 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cool Maths Projects</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    margin: 0;
     font-family: "Poppins", sans-serif;
-    color: white;
-    text-align: center;
-    background: radial-gradient(circle at 20% 20%, #2a004f, #0f0c29, #302b63, #24243e);
-    background-size: 300% 300%;
-    animation: backgroundFlow 12s ease infinite;
+    color: #222;
+    background: #fff;
     overflow-x: hidden;
   }
 
-  @keyframes backgroundFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
   header {
-    padding: 70px 20px 15px;
-    font-size: 3em;
+    background: linear-gradient(135deg, #4b0082, #6a0dad);
+    color: white;
+    padding: 80px 10%;
+    border-bottom-left-radius: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+  }
+
+  header h1 {
+    font-size: 2.5em;
+    max-width: 600px;
+    line-height: 1.3;
+  }
+
+  header p {
+    margin-top: 15px;
+    font-size: 1.1em;
+    max-width: 500px;
+    color: #eee;
+  }
+
+  .learn-btn {
+    margin-top: 25px;
+    padding: 12px 25px;
+    background: #fff;
+    color: #4b0082;
+    border: none;
+    border-radius: 8px;
     font-weight: 600;
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    animation: titleGlow 3s ease-in-out infinite alternate;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
   }
 
-  @keyframes titleGlow {
-    from { text-shadow: 0 0 15px #a855f7, 0 0 25px #9333ea; }
-    to { text-shadow: 0 0 25px #c084fc, 0 0 50px #a855f7; }
+  .learn-btn:hover {
+    background: #f4eaff;
+    transform: translateY(-3px);
   }
 
-  p.intro {
-    width: 85%;
-    margin: auto;
-    font-size: 1.25em;
-    color: #ddd;
-    max-width: 750px;
-    line-height: 1.7;
+  .hero-img {
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    width: 350px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.15);
+  }
+
+  .projects {
+    padding: 80px 10%;
+    text-align: center;
+  }
+
+  .projects h2 {
+    font-size: 2em;
+    color: #222;
     margin-bottom: 40px;
   }
 
-  .container {
+  .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
-    padding-bottom: 60px;
+    gap: 25px;
   }
 
-  .btn {
-    position: relative;
-    background: rgba(255, 255, 255, 0.08);
-    border: 2px solid rgba(255,255,255,0.4);
-    color: white;
-    padding: 18px 50px;
-    border-radius: 14px;
+  .card {
+    background: #fafafa;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 30px 25px;
+    width: 250px;
+    transition: 0.3s ease;
+    border-top: 5px solid transparent;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    border-top-color: #4b0082;
+  }
+
+  .card h3 {
     font-size: 1.2em;
-    text-decoration: none;
-    transition: all 0.4s ease;
-    box-shadow: 0 0 10px rgba(255,255,255,0.1);
-    backdrop-filter: blur(6px);
-    overflow: hidden;
+    margin-bottom: 10px;
+    color: #4b0082;
   }
 
-  .btn:hover {
-    background: white;
-    color: #1b004b;
-    transform: translateY(-6px) scale(1.06);
-    box-shadow: 0 0 25px rgba(255,255,255,0.7);
+  .card p {
+    color: #555;
+    font-size: 0.95em;
+    line-height: 1.5;
   }
 
-  .btn::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, transparent 10.01%);
-    background-size: 20px 20px;
-    transform: rotate(45deg);
-    opacity: 0;
-    transition: opacity 0.6s;
+  .section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 10%;
+    gap: 40px;
   }
 
-  .btn:hover::before {
-    opacity: 0.2;
+  .section img {
+    width: 400px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
   }
 
-  /* Tooltip styles */
-  .tooltip {
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.75);
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-size: 0.9em;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+  .section .text {
+    max-width: 500px;
   }
 
-  .btn:hover .tooltip {
-    opacity: 1;
-    transform: translate(-50%, -10px);
+  .section .text h2 {
+    font-size: 2em;
+    color: #4b0082;
+    margin-bottom: 15px;
+  }
+
+  .section .text p {
+    font-size: 1em;
+    color: #444;
+    line-height: 1.6;
   }
 
   footer {
+    text-align: center;
+    padding: 40px;
     font-size: 0.9em;
-    color: #aaa;
-    margin-bottom: 30px;
-    opacity: 0.7;
-  }
-
-  /* Floating animation for subtle movement */
-  @keyframes floaty {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0px); }
-  }
-
-  .btn {
-    animation: floaty 5s ease-in-out infinite;
-    animation-delay: calc(var(--i) * 0.5s);
+    color: #888;
+    border-top: 1px solid #eee;
   }
 </style>
 </head>
 <body>
-  <header>Cool Maths Projects ✨</header>
-  
-  <p class="intro">
-    Mathematics isn’t just numbers on paper — it’s the rhythm of the universe.  
-    From the symmetry of snowflakes to the infinite digits of π, math is art, logic, and imagination in motion.  
-    Explore the projects below to see how equations turn into experiences.
-  </p>
 
-  <div class="container">
-    <a class="btn" href="pythagoras.html" style="--i:1;">
-      Pythagoras Theorem
-      <span class="tooltip">Visualize how a² + b² = c² forms a perfect right triangle.</span>
+<header>
+  <h1>We shape our understanding of the universe with mathematics</h1>
+  <p>Math is the language of patterns — connecting logic, beauty, and discovery. Explore projects that bring numbers to life.</p>
+  <button class="learn-btn">Learn More</button>
+  <img src="https://images.unsplash.com/photo-1616628188578-9b7fbed59f02?auto=format&fit=crop&w=600&q=60" class="hero-img" alt="Math Concept">
+</header>
+
+<section class="projects">
+  <h2>Explore Our Maths Projects</h2>
+  <div class="card-container">
+    <a href="pythagoras.html" class="card">
+      <h3>Pythagoras Theorem</h3>
+      <p>Visualize the elegance of right triangles and learn how geometry proves that a² + b² = c².</p>
     </a>
-    <a class="btn" href="primes.html" style="--i:2;">
-      Prime Explorer
-      <span class="tooltip">Uncover the mystery of numbers divisible only by themselves and 1.</span>
+
+    <a href="primes.html" class="card">
+      <h3>Prime Explorer</h3>
+      <p>Investigate the infinite world of prime numbers and their hidden patterns.</p>
     </a>
-    <a class="btn" href="pi.html" style="--i:3;">
-      Pi Digits Viewer
-      <span class="tooltip">Watch π unfold — a never-ending story of circles and infinity.</span>
+
+    <a href="pi.html" class="card">
+      <h3>Pi Digits Viewer</h3>
+      <p>Discover the never-ending digits of π and how it defines circular perfection.</p>
     </a>
-    <a class="btn" href="golden.html" style="--i:4;">
-      Golden Ratio
-      <span class="tooltip">Discover the divine proportion behind art, nature, and harmony.</span>
+
+    <a href="golden.html" class="card">
+      <h3>Golden Ratio</h3>
+      <p>Uncover the divine proportion that appears in art, nature, and even your DNA.</p>
     </a>
   </div>
+</section>
 
-  <footer>© 2025 Maths Magic | Where logic meets imagination</footer>
-</body>
-</html>
+<section class="section">
+  <div class="text">
+    <h2>Mathematics: The Art of Logic</h2>
+    <p>From geometry to algebra, math isn’t just about numbers — it’s about understanding relationships, symmetries, and infinite possibilities. Every theorem tells a story, every equation sings a song of reason.</p>
+    <button class="learn-btn">Explore More</button>
+  </div>
+  <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=60" alt="Math visualization">
+</section>
 
-  <footer>© 2025 Maths Magic | Built with curiosity</footer>
+<footer>© 2025 Maths Magic | Designed to Inspire Learning</footer>
+
 </body>
 </html>
