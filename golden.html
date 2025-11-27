@@ -48,30 +48,36 @@
   }
 
   .slide {
-    display: none;
+    position: absolute;
     width: 100%;
     height: 420px;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
     border-radius: 10px;
-    animation: fade 1.2s ease-in-out;
   }
 
-  @keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .slide.active {
+    opacity: 1;
+    z-index: 2;
   }
 
   .caption {
     position: absolute;
-    bottom: 10px;
-    left: 0;
+    bottom: 0;
     width: 100%;
     text-align: center;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.5);
     color: gold;
     padding: 10px 0;
     font-size: 1em;
     font-weight: 500;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+
+  .caption.active {
+    opacity: 1;
   }
 
   .info-section {
@@ -99,8 +105,8 @@
 
   <!-- Slideshow Section -->
   <div class="slideshow-container">
-    <img class="slide" src="grs.jpg" alt="Golden Ratio Diagram">
-    <div class="caption">Golden Ratio Geometry</div>
+    <img class="slide active" src="grs.jpg" alt="Golden Ratio Diagram">
+    <div class="caption active">Golden Ratio Geometry</div>
 
     <img class="slide" src="mgs.jpg" alt="Milky Way Galaxy">
     <div class="caption">The Milky Way’s Spiral and φ</div>
@@ -128,24 +134,22 @@
   <footer>© 2025 The Golden Ratio Exploration Project</footer>
 
   <script>
-    // Slideshow functionality
-    let slideIndex = 0;
-    const slides = document.getElementsByClassName("slide");
-    const captions = document.getElementsByClassName("caption");
+    const slides = document.querySelectorAll(".slide");
+    const captions = document.querySelectorAll(".caption");
+    let index = 0;
 
-    function showSlides() {
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-        if (captions[i]) captions[i].style.display = "none";
-      }
-      slideIndex++;
-      if (slideIndex > slides.length) { slideIndex = 1; }
-      slides[slideIndex-1].style.display = "block";
-      if (captions[slideIndex-1]) captions[slideIndex-1].style.display = "block";
-      setTimeout(showSlides, 3000); // change every 3s
+    function showSlide() {
+      slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        captions[i].classList.remove("active");
+      });
+
+      index = (index + 1) % slides.length;
+      slides[index].classList.add("active");
+      captions[index].classList.add("active");
     }
 
-    showSlides();
+    setInterval(showSlide, 3000);
   </script>
 
 </body>
