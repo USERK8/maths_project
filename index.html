@@ -3,60 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maths Projects</title>
+  <title>Cool Maths Projects</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
       font-family: "Poppins", sans-serif;
       margin: 0;
-      background: linear-gradient(135deg, #1b004b, #4b0082, #1f1c2c);
+      background: linear-gradient(-45deg, #1b004b, #4b0082, #1f1c2c, #3a0ca3);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
       color: white;
       text-align: center;
       overflow-x: hidden;
     }
-    header {
-      padding: 40px 20px;
-      font-size: 2.5em;
-      letter-spacing: 1px;
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
+
+    header {
+      padding: 60px 20px 10px;
+      font-size: 3em;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #a855f7, 0 0 20px #9333ea; }
+      to { text-shadow: 0 0 20px #c084fc, 0 0 40px #a855f7; }
+    }
+
     p {
       width: 80%;
       margin: auto;
-      font-size: 1.2em;
+      font-size: 1.25em;
       color: #ddd;
+      max-width: 700px;
+      line-height: 1.6;
     }
+
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 40px;
-      gap: 20px;
+      margin-top: 50px;
+      gap: 25px;
+      padding-bottom: 60px;
     }
+
     .btn {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
       border: 2px solid #fff;
       color: white;
-      padding: 20px 40px;
-      border-radius: 12px;
-      font-size: 1.1em;
+      padding: 18px 50px;
+      border-radius: 14px;
+      font-size: 1.2em;
       text-decoration: none;
-      transition: 0.3s;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      backdrop-filter: blur(4px);
     }
+
     .btn:hover {
       background: white;
       color: #1b004b;
-      transform: scale(1.05);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 0 25px white;
+    }
+
+    footer {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-bottom: 30px;
+      opacity: 0.7;
     }
   </style>
 </head>
 <body>
-  <header>Cool Maths Projects</header>
-  <p>Explore the creative side of mathematics — from geometry to patterns and infinite numbers. Click on a project to begin!</p>
+  <header>Cool Maths Projects ✨</header>
+  <p>Dive into the beauty of numbers, geometry, and patterns that shape our universe. Choose a project and see how math turns imagination into logic.</p>
+  
   <div class="container">
     <a class="btn" href="pythagoras.html">Pythagoras Theorem</a>
     <a class="btn" href="primes.html">Prime Explorer</a>
     <a class="btn" href="pi.html">Pi Digits Viewer</a>
-    
     <a class="btn" href="golden.html">Golden Ratio</a>
   </div>
+
+  <footer>© 2025 Maths Magic | Built with curiosity</footer>
 </body>
 </html>
