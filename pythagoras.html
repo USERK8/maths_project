@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pythagoras Theorem Visualizer</title>
+<title>Pythagoras Theorem Visual Proof</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-  
+
   body {
     background: radial-gradient(circle at top left, #0f2027, #203a43, #2c5364);
     color: white;
@@ -75,6 +75,8 @@
   #result {
     font-size: 1.2em;
     margin-top: 15px;
+    opacity: 0;
+    transition: opacity 1s ease;
   }
 
   canvas {
@@ -93,65 +95,154 @@
 </style>
 </head>
 <body>
-  <h1>Pythagoras Theorem Visualizer</h1>
+  <h1>Pythagoras Theorem Visual Proof</h1>
   <p>a² + b² = c²</p>
   <div class="controls">
     a: <input id="a" type="number" value="3" min="1"> 
     b: <input id="b" type="number" value="4" min="1">
-    <button onclick="draw()">Calculate</button>
+    <button onclick="drawAnimated()">Visualize</button>
   </div>
   <p id="result"></p>
-  <canvas id="canvas" width="400" height="400"></canvas>
+  <canvas id="canvas" width="500" height="500"></canvas>
   <footer>© 2025 Interactive Math Lab</footer>
 
   <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    const result = document.getElementById('result');
 
-    function draw() {
+    function drawAnimated() {
       let a = parseFloat(document.getElementById('a').value);
       let b = parseFloat(document.getElementById('b').value);
       let c = Math.sqrt(a*a + b*b).toFixed(2);
+      result.style.opacity = 0;
+      ctx.clearRect(0, 0, 500, 500);
 
-      document.getElementById('result').textContent = `c = √(${a}² + ${b}²) = ${c}`;
+      const startX = 100, startY = 400;
+      const scale = 25;
 
-      ctx.clearRect(0,0,400,400);
+      const points = [
+        {x: startX, y: startY},
+        {x: startX, y: startY - b * scale},
+        {x: startX + a * scale, y: startY}
+      ];
 
-      // Draw glowing triangle
-      const startX = 80;
-      const startY = 350;
+      let frame = 0;
+      const totalFrames = 120;
 
-      ctx.beginPath();
-      ctx.moveTo(startX, startY);
-      ctx.lineTo(startX, startY - b*20);
-      ctx.lineTo(startX + a*20, startY);
-      ctx.closePath();
-      ctx.strokeStyle = "#00eaff";
-      ctx.lineWidth = 3;
-      ctx.shadowColor = "#00eaff";
-      ctx.shadowBlur = 15;
-      ctx.stroke();
-      ctx.shadowBlur = 0;
+      function animateTriangle() {
+        ctx.clearRect(0, 0, 500, 500);
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
 
-      // Label sides
-      ctx.fillStyle = "#fff";
-      ctx.font = "16px Poppins";
-      ctx.fillText(`a = ${a}`, startX + a*10 - 20, startY + 25);
-      ctx.fillText(`b = ${b}`, startX - 60, startY - b*10);
-      ctx.fillText(`c = ${c}`, startX + a*10, startY - b*10 - 10);
+        if (frame < totalFrames / 3) {
+          const t = frame / (totalFrames / 3);
+          ctx.lineTo(points[0].x, points[0].y - b * scale * t);
+        } else if (frame < (2 * totalFrames) / 3) {
+          ctx.lineTo(points[1].x, points[1].y);
+          const t = (frame - totalFrames / 3) / (totalFrames / 3);
+          ctx.lineTo(points[1].x + a * scale * t, points[1].y);
+        } else {
+          ctx.lineTo(points[1].x, points[1].y);
+          ctx.lineTo(points[2].x, points[2].y);
+          const t = (frame - (2 * totalFrames) / 3) / (totalFrames / 3);
+          ctx.lineTo(points[0].x * (1 - t) + points[2].x * t, points[0].y * (1 - t) + points[2].y * t);
+        }
 
-      // Right-angle marker
-      ctx.beginPath();
-      ctx.moveTo(startX, startY);
-      ctx.lineTo(startX + 20, startY);
-      ctx.lineTo(startX + 20, startY - 20);
-      ctx.lineTo(startX, startY - 20);
-      ctx.closePath();
-      ctx.fillStyle = "rgba(255,255,255,0.5)";
-      ctx.fill();
+        ctx.strokeStyle = "#00eaff";
+        ctx.lineWidth = 3;
+        ctx.shadowColor = "#00eaff";
+        ctx.shadowBlur = 15;
+        ctx.stroke();
+
+        frame++;
+        if (frame <= totalFrames) {
+          requestAnimationFrame(animateTriangle);
+        } else {
+          drawSquares(points, a, b, c, scale);
+        }
+      }
+      animateTriangle();
     }
 
-    draw();
+    function drawSquares(points, a, b, c, scale) {
+      // Draw the right triangle once
+      ctx.shadowBlur = 0;
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      ctx.lineTo(points[1].x, points[1].y);
+      ctx.lineTo(points[2].x, points[2].y);
+      ctx.closePath();
+      ctx.strokeStyle = "#00eaff";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      let t = 0;
+      const frames = 100;
+
+      function animateSquares() {
+        ctx.clearRect(0, 0, 500, 500);
+
+        // Redraw triangle
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineTo(points[1].x, points[1].y);
+        ctx.lineTo(points[2].x, points[2].y);
+        ctx.closePath();
+        ctx.strokeStyle = "#00eaff";
+        ctx.stroke();
+
+        // Draw square on side a
+        ctx.fillStyle = "rgba(0,255,255,0.3)";
+        ctx.fillRect(points[2].x, points[2].y - a*scale*t, a*scale*t, a*scale*t);
+
+        // Square on side b
+        ctx.save();
+        ctx.translate(points[0].x - b*scale*t, points[1].y - b*scale*t);
+        ctx.fillStyle = "rgba(255,0,255,0.3)";
+        ctx.fillRect(0, 0, b*scale*t, b*scale*t);
+        ctx.restore();
+
+        // Hypotenuse square (rotated)
+        if (t > 0.5) {
+          ctx.save();
+          ctx.translate(points[1].x, points[1].y);
+          const angle = Math.atan2(points[2].y - points[1].y, points[2].x - points[1].x);
+          ctx.rotate(angle);
+          const side = Math.sqrt(a*a + b*b) * scale * (t - 0.5) * 2;
+          ctx.fillStyle = "rgba(0,255,128,0.3)";
+          ctx.fillRect(0, -side, side, side);
+          ctx.restore();
+        }
+
+        if (t < 1) {
+          t += 1 / frames;
+          requestAnimationFrame(animateSquares);
+        } else {
+          labelSides(points, a, b, c);
+        }
+      }
+      animateSquares();
+    }
+
+    function labelSides(points, a, b, c) {
+      ctx.fillStyle = "#fff";
+      ctx.font = "16px Poppins";
+      ctx.fillText(`a = ${a}`, points[0].x + (points[2].x - points[0].x)/2 - 10, points[0].y + 25);
+      ctx.fillText(`b = ${b}`, points[0].x - 50, points[0].y - (points[0].y - points[1].y)/2);
+      ctx.fillText(`c = ${c}`, points[1].x + (points[2].x - points[1].x)/2 - 10, points[1].y - 15);
+
+      result.textContent = `c = √(${a}² + ${b}²) = ${c}`;
+      result.style.opacity = 1;
+    }
+
+    drawAnimated();
+  </script>
+</body>
+</html>
+
+
+    drawAnimated();
   </script>
 </body>
 </html>
