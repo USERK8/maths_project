@@ -22,10 +22,16 @@
     padding: 80px 10%;
     border-bottom-left-radius: 100px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
     position: relative;
+    flex-wrap: wrap;
+  }
+
+  header .text {
+    flex: 1;
+    min-width: 300px;
   }
 
   header h1 {
@@ -35,36 +41,18 @@
   }
 
   header p {
-    margin-top: 15px;
-    font-size: 1.1em;
-    max-width: 500px;
+    margin-top: 20px;
+    font-size: 1.15em;
+    max-width: 550px;
     color: #eee;
-  }
-
-  .learn-btn {
-    margin-top: 25px;
-    padding: 12px 25px;
-    background: #fff;
-    color: #4b0082;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1em;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  .learn-btn:hover {
-    background: #f4eaff;
-    transform: translateY(-3px);
+    line-height: 1.6;
   }
 
   .hero-img {
-    position: absolute;
-    right: 10%;
-    bottom: 0;
-    width: 350px;
-    border-radius: 15px;
+    flex: 1;
+    min-width: 280px;
+    max-width: 400px;
+    border-radius: 20px;
     box-shadow: 0 0 30px rgba(0,0,0,0.15);
   }
 
@@ -83,15 +71,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 25px;
+    gap: 30px;
   }
 
   .card {
+    text-decoration: none;
     background: #fafafa;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    padding: 30px 25px;
-    width: 250px;
+    padding: 35px 30px;
+    width: 270px;
     transition: 0.3s ease;
     border-top: 5px solid transparent;
   }
@@ -102,15 +91,15 @@
   }
 
   .card h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
+    font-size: 1.4em;
+    margin-bottom: 15px;
     color: #4b0082;
   }
 
   .card p {
-    color: #555;
-    font-size: 0.95em;
-    line-height: 1.5;
+    color: #444;
+    font-size: 1.05em;
+    line-height: 1.6;
   }
 
   .section {
@@ -119,6 +108,7 @@
     justify-content: space-between;
     padding: 80px 10%;
     gap: 40px;
+    flex-wrap: wrap;
   }
 
   .section img {
@@ -155,10 +145,16 @@
 <body>
 
 <header>
-  <h1>We shape our understanding of the universe with mathematics</h1>
-  <p>Math is the language of patterns — connecting logic, beauty, and discovery. Explore projects that bring numbers to life.</p>
-  <button class="learn-btn">Learn More</button>
-  <img src="https://images.unsplash.com/photo-1616628188578-9b7fbed59f02?auto=format&fit=crop&w=600&q=60" class="hero-img" alt="Math Concept">
+  <div class="text">
+    <h1>We shape our understanding of the universe with mathematics</h1>
+    <p>
+      Mathematics is the universal language of patterns, logic, and precision. 
+      It explains the rhythm of planets, the structure of music, and the symmetry in art. 
+      From ancient geometry to modern computation, it gives us the power to decode nature’s secrets 
+      and build everything from bridges to galaxies. Step into the world where imagination meets proof.
+    </p>
+  </div>
+  <img src="https://images.unsplash.com/photo-1581093588401-22dbe9b75b97?auto=format&fit=crop&w=600&q=60" class="hero-img" alt="Mathematics Concept">
 </header>
 
 <section class="projects">
@@ -166,22 +162,22 @@
   <div class="card-container">
     <a href="pythagoras.html" class="card">
       <h3>Pythagoras Theorem</h3>
-      <p>Visualize the elegance of right triangles and learn how geometry proves that a² + b² = c².</p>
+      <p>Visualize the timeless right triangle relationship where geometry meets algebra.</p>
     </a>
 
     <a href="primes.html" class="card">
       <h3>Prime Explorer</h3>
-      <p>Investigate the infinite world of prime numbers and their hidden patterns.</p>
+      <p>Discover the building blocks of numbers — mysterious, indivisible, and infinite.</p>
     </a>
 
     <a href="pi.html" class="card">
       <h3>Pi Digits Viewer</h3>
-      <p>Discover the never-ending digits of π and how it defines circular perfection.</p>
+      <p>Watch the infinite digits of π unfold, defining circles, waves, and the cosmos.</p>
     </a>
 
     <a href="golden.html" class="card">
       <h3>Golden Ratio</h3>
-      <p>Uncover the divine proportion that appears in art, nature, and even your DNA.</p>
+      <p>Find harmony in numbers — the divine proportion that shapes art, nature, and design.</p>
     </a>
   </div>
 </section>
@@ -189,10 +185,13 @@
 <section class="section">
   <div class="text">
     <h2>Mathematics: The Art of Logic</h2>
-    <p>From geometry to algebra, math isn’t just about numbers — it’s about understanding relationships, symmetries, and infinite possibilities. Every theorem tells a story, every equation sings a song of reason.</p>
-    <button class="learn-btn">Explore More</button>
+    <p>
+      Math isn’t only about equations — it’s about exploration, problem-solving, and discovery.
+      Every proof is a story of curiosity, and every formula reveals the deep connections 
+      that hold our universe together. The journey of mathematics is endless — and endlessly inspiring.
+    </p>
   </div>
-  <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=600&q=60" alt="Math visualization">
+  <img src="https://images.unsplash.com/photo-1554774853-b414d2a2b4a9?auto=format&fit=crop&w=600&q=60" alt="Math visualization">
 </section>
 
 <footer>© 2025 Maths Magic | Designed to Inspire Learning</footer>
