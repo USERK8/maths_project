@@ -54,10 +54,7 @@
     to   { text-shadow: 0 0 25px #26c6da, 0 0 40px #00bcd4; }
   }
 
-  p {
-    font-size: 1.2em;
-    color: #ddd;
-  }
+  p { font-size: 1.2em; color: #ddd; }
 
   .controls {
     margin-top: 25px;
@@ -72,17 +69,8 @@
     backdrop-filter: blur(8px);
   }
 
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  label {
-    font-size: 0.9em;
-    color: #ccc;
-    margin-bottom: 5px;
-  }
+  .input-group { display: flex; flex-direction: column; align-items: center; }
+  label { font-size: 0.9em; color: #ccc; margin-bottom: 5px; }
 
   input {
     width: 90px;
@@ -121,12 +109,7 @@
     box-shadow: 0 0 25px rgba(255,255,255,0.4);
   }
 
-  #result {
-    font-size: 1.2em;
-    margin-top: 20px;
-    opacity: 0;
-    transition: opacity 1s ease;
-  }
+  #result { font-size: 1.2em; margin-top: 20px; opacity: 0; transition: opacity 1s ease; }
 
   canvas {
     background: rgba(255,255,255,0.05);
@@ -168,100 +151,107 @@
 <footer>© 2025 Interactive Math Lab</footer>
 
 <script>
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
-  const result = document.getElementById('result');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const result = document.getElementById('result');
 
-  function drawAnimated() {
-    let a = parseFloat(document.getElementById('a').value);
-    let b = parseFloat(document.getElementById('b').value);
-    let c = Math.sqrt(a * a + b * b).toFixed(2);
-    result.style.opacity = 0;
+function drawAnimated() {
+  let a = parseFloat(document.getElementById('a').value);
+  let b = parseFloat(document.getElementById('b').value);
+  let c = Math.sqrt(a * a + b * b).toFixed(2);
+  result.style.opacity = 0;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const maxSide = Math.max(a, b);
+  const scale = 300 / (maxSide + 2);
+
+  const triWidth = a * scale;
+  const triHeight = b * scale;
+  const offsetX = (canvas.width - triWidth) / 2;
+  const offsetY = (canvas.height + triHeight) / 2;
+
+  const A = {x: offsetX, y: offsetY};
+  const B = {x: offsetX, y: offsetY - triHeight};
+  const C = {x: offsetX + triWidth, y: offsetY};
+
+  const totalFrames = 90;
+  let frame = 0;
+
+  function drawSide(p1, p2, progress) {
+    const x = p1.x + (p2.x - p1.x) * progress;
+    const y = p1.y + (p2.y - p1.y) * progress;
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
+
+  function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "#00eaff";
+    ctx.shadowColor = "#00eaff";
+    ctx.shadowBlur = 15;
 
-    const maxSide = Math.max(a, b);
-    const scale = 300 / (maxSide + 2);
+    if (frame >= totalFrames / 3) drawSide(A, B, 1);
+    else drawSide(A, B, frame / (totalFrames / 3));
 
-    const triWidth = a * scale;
-    const triHeight = b * scale;
-    const offsetX = (canvas.width - triWidth) / 2;
-    const offsetY = (canvas.height + triHeight) / 2;
+    if (frame >= (2 * totalFrames) / 3) drawSide(B, C, 1);
+    else if (frame > totalFrames / 3)
+      drawSide(B, C, (frame - totalFrames / 3) / (totalFrames / 3));
 
-    const A = {x: offsetX, y: offsetY};
-    const B = {x: offsetX, y: offsetY - triHeight};
-    const C = {x: offsetX + triWidth, y: offsetY};
+    if (frame >= totalFrames) {
+      drawSide(C, A, 1);
+      labelSides(a, b, c, A, B, C);
+      return;
+    } else if (frame > (2 * totalFrames) / 3)
+      drawSide(C, A, (frame - (2 * totalFrames) / 3) / (totalFrames / 3));
 
-    const totalFrames = 90;
-    let frame = 0;
-
-    function drawSide(p1, p2, progress) {
-      const x = p1.x + (p2.x - p1.x) * progress;
-      const y = p1.y + (p2.y - p1.y) * progress;
-      ctx.beginPath();
-      ctx.moveTo(p1.x, p1.y);
-      ctx.lineTo(x, y);
-      ctx.stroke();
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = "#00eaff";
-      ctx.shadowColor = "#00eaff";
-      ctx.shadowBlur = 15;
-
-      if (frame >= totalFrames / 3) drawSide(A, B, 1);
-      else drawSide(A, B, frame / (totalFrames / 3));
-
-      if (frame >= (2 * totalFrames) / 3) drawSide(B, C, 1);
-      else if (frame > totalFrames / 3)
-        drawSide(B, C, (frame - totalFrames / 3) / (totalFrames / 3));
-
-      if (frame >= totalFrames) {
-        drawSide(C, A, 1);
-        labelSides(a, b, c, A, B, C);
-        return;
-      } else if (frame > (2 * totalFrames) / 3)
-        drawSide(C, A, (frame - (2 * totalFrames) / 3) / (totalFrames / 3));
-
-      frame++;
-      requestAnimationFrame(animate);
-    }
-
-    animate();
+    frame++;
+    requestAnimationFrame(animate);
   }
 
-  // --------------------------
-  // UPDATED LABEL POSITIONS
-  // --------------------------
-  function labelSides(a, b, c, A, B, C) {
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = "#fff";
-    ctx.font = "18px Poppins";
+  animate();
+}
 
-    const offsetA = 45;  
-    const offsetB = 45;  
-    const offsetC = 40;  
+// --------------------------
+// LABELS POSITIONED SAFELY OUTSIDE TRIANGLE
+// --------------------------
+function labelSides(a, b, c, A, B, C) {
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = "#fff";
+  ctx.font = "18px Poppins";
 
-    ctx.fillText(`a = ${a}`, (A.x + C.x) / 2, A.y + offsetA);
-    ctx.fillText(`b = ${b}`, A.x - offsetB, (A.y + B.y) / 2);
+  // Side a (horizontal, AC)
+  const aMidX = (A.x + C.x) / 2;
+  const aMidY = (A.y + C.y) / 2;
+  ctx.fillText(`a = ${a}`, aMidX, aMidY + 40); // below horizontal
 
-    const midX = (B.x + C.x) / 2;
-    const midY = (B.y + C.y) / 2;
-    const dx = C.x - B.x;
-    const dy = C.y - B.y;
-    const length = Math.sqrt(dx*dx + dy*dy);
-    const perpX = -dy / length * offsetC;
-    const perpY = dx / length * offsetC;
+  // Side b (vertical, AB)
+  const bMidX = (A.x + B.x) / 2;
+  const bMidY = (A.y + B.y) / 2;
+  ctx.fillText(`b = ${b}`, bMidX - 40, bMidY); // left of vertical
 
-    ctx.fillText(`c = ${c}`, midX + perpX, midY + perpY);
+  // Side c (hypotenuse, BC)
+  const cMidX = (B.x + C.x) / 2;
+  const cMidY = (B.y + C.y) / 2;
 
-    result.textContent = `c = √(${a}² + ${b}²) = ${c}`;
-    result.style.opacity = 1;
-  }
+  // perpendicular direction for label
+  const dx = C.x - B.x;
+  const dy = C.y - B.y;
+  const length = Math.sqrt(dx*dx + dy*dy);
+  const offset = 40; // distance away from hypotenuse
 
-  drawAnimated();
+  const perpX = -dy / length * offset;
+  const perpY = dx / length * offset;
+
+  ctx.fillText(`c = ${c}`, cMidX + perpX, cMidY + perpY);
+
+  result.textContent = `c = √(${a}² + ${b}²) = ${c}`;
+  result.style.opacity = 1;
+}
+
+drawAnimated();
 </script>
-
 </body>
 </html>
