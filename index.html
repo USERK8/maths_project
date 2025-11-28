@@ -14,7 +14,7 @@
       text-align: center;
       background: radial-gradient(circle at 20% 20%, #2a004f, #0f0c29, #302b63, #24243e);
       background-size: 300% 300%;
-      animation: backgroundFlow 12s ease infinite;
+      animation: backgroundFlow 12s ease infinite, backgroundImageAnim 15s linear infinite;
       overflow-x: hidden;
     }
 
@@ -22,6 +22,18 @@
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+
+    @keyframes backgroundImageAnim {
+      0% {
+        background-image: url('https://math.stackexchange.com/questions/3662898/'); /* Replace with actual URL of the math image */
+      }
+      50% {
+        background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/5a/Golden_Ratio_Spiral_illustration.png');
+      }
+      100% {
+        background-image: url('https://www.scientificamerican.com/sciam/cache/file/99C3E558-65F5-4B11-84E31A674F58DB61.png'); /* Replace with another math-related background */
+      }
     }
 
     header {
