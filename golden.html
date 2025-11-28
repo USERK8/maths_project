@@ -16,6 +16,31 @@
       overflow-x: hidden;
     }
 
+    /* Back button styling */
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0,229,255,0.15);
+      padding: 10px 22px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #00e5ff;
+      font-weight: 600;
+      border: 1px solid rgba(0,229,255,0.35);
+      backdrop-filter: blur(6px);
+      transition: 0.3s;
+      z-index: 10;
+    }
+
+    .back-btn:hover {
+      background: #00e5ff;
+      color: #000;
+      box-shadow: 0 0 20px #48cae4;
+      transform: scale(1.08);
+    }
+
     h1 {
       margin-top: 40px;
       font-size: 2.5em;
@@ -106,6 +131,9 @@
   </style>
 </head>
 <body>
+
+  <!-- Back Button -->
+  <a href="index.html" class="back-btn">← Back</a>
 
   <h1>The Golden Ratio (φ ≈ 1.618)</h1>
   <p>The Golden Ratio, also known as φ (phi), defines perfect proportions found in nature, art, and architecture. Its beauty has inspired designers, mathematicians, and artists for centuries — a bridge between math and aesthetics.</p>
