@@ -17,7 +17,6 @@
     overflow-x: hidden;
   }
 
-  /* --- Added Back Button Style --- */
   .back-btn {
     position: absolute;
     top: 20px;
@@ -33,7 +32,7 @@
     border: 1px solid rgba(255,255,255,0.35);
     box-shadow: 0 0 10px rgba(255,255,255,0.25);
     transition: 0.3s;
-    z-index: 1; /* ensures it never blocks canvas/UI */
+    z-index: 1;
   }
 
   .back-btn:hover {
@@ -42,7 +41,6 @@
     box-shadow: 0 0 20px rgba(255,255,255,0.5);
     transform: scale(1.08);
   }
-  /* -------------------------------- */
 
   h1 {
     font-size: 2.5em;
@@ -147,7 +145,6 @@
 </head>
 <body>
 
-  <!-- ⭐ Added Back Button ⭐ -->
   <a href="index.html" class="back-btn">← Back</a>
 
   <h1>Pythagoras Theorem Visualizer</h1>
@@ -238,9 +235,24 @@
       ctx.shadowBlur = 0;
       ctx.fillStyle = "#fff";
       ctx.font = "16px Poppins";
+
+      // Labels for a and b
       ctx.fillText(`a = ${a}`, (A.x + C.x) / 2 - 20, A.y + 25);
       ctx.fillText(`b = ${b}`, A.x - 55, (A.y + B.y) / 2);
-      ctx.fillText(`c = ${c}`, (B.x + C.x) / 2 - 10, (B.y + C.y) / 2 - 10);
+
+      // Label c perpendicular to hypotenuse
+      const midX = (B.x + C.x) / 2;
+      const midY = (B.y + C.y) / 2;
+      const dx = C.x - B.x;
+      const dy = C.y - B.y;
+      const length = Math.sqrt(dx*dx + dy*dy);
+      const offset = 20; // distance from hypotenuse
+      // Perpendicular vector
+      const perpX = -dy / length * offset;
+      const perpY = dx / length * offset;
+
+      ctx.fillText(`c = ${c}`, midX + perpX, midY + perpY);
+
       result.textContent = `c = √(${a}² + ${b}²) = ${c}`;
       result.style.opacity = 1;
     }
