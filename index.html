@@ -26,13 +26,13 @@
 
     @keyframes backgroundImageAnim {
       0% {
-        background-image: url('https://math.stackexchange.com/questions/3662898/'); /* Replace with actual URL of the math image */
-      }
-      50% {
         background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/5a/Golden_Ratio_Spiral_illustration.png');
       }
+      50% {
+        background-image: url('https://www.scientificamerican.com/sciam/cache/file/99C3E558-65F5-4B11-84E31A674F58DB61.png');
+      }
       100% {
-        background-image: url('https://www.scientificamerican.com/sciam/cache/file/99C3E558-65F5-4B11-84E31A674F58DB61.png'); /* Replace with another math-related background */
+        background-image: url('https://math.stackexchange.com/questions/3662898/');
       }
     }
 
@@ -43,6 +43,7 @@
       letter-spacing: 2px;
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
       animation: titleGlow 3s ease-in-out infinite alternate;
+      z-index: 2; /* Ensure header is above background */
     }
 
     @keyframes titleGlow {
@@ -58,6 +59,7 @@
       max-width: 750px;
       line-height: 1.7;
       margin-bottom: 40px;
+      z-index: 2;
     }
 
     .container {
@@ -66,6 +68,7 @@
       justify-content: center;
       gap: 30px;
       padding-bottom: 60px;
+      z-index: 2;
     }
 
     .btn {
@@ -82,6 +85,7 @@
       backdrop-filter: blur(6px);
       overflow: hidden;
       animation: floaty 5s ease-in-out infinite;
+      z-index: 2; /* Ensure buttons are above background */
     }
 
     .btn:hover {
@@ -141,7 +145,9 @@
       color: #aaa;
       margin-bottom: 30px;
       opacity: 0.7;
+      z-index: 2;
     }
+
   </style>
 </head>
 
