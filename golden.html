@@ -108,4 +108,60 @@
 <body>
 
   <h1>The Golden Ratio (φ ≈ 1.618)</h1>
-  <p>The Golden Ratio, also know
+  <p>The Golden Ratio, also known as φ (phi), defines perfect proportions found in nature, art, and architecture. Its beauty has inspired designers, mathematicians, and artists for centuries — a bridge between math and aesthetics.</p>
+
+  <!-- Slideshow -->
+  <div class="slideshow-container">
+    <div class="slide active">
+      <img src="0.avif" alt="Golden Ratio Diagram">
+      <div class="caption">Golden Ratio Geometry</div>
+    </div>
+    <div class="slide">
+      <img src="1.png" alt="Sea Shell">
+      <div class="caption">Sea Shell's Internal Structure and φ</div>
+    </div>
+    <div class="slide">
+      <img src="2.png" alt="Human Fist">
+      <div class="caption">Human Fist And Golden Ratio</div>
+    </div>
+    <div class="slide">
+      <img src="3.jpg" alt="Taj Mahal">
+      <div class="caption">The Taj Mahal and Divine Symmetry</div>
+    </div>
+    <div class="slide">
+      <img src="4.jpg" alt="Human Ear">
+      <div class="caption">Human Ear With Golden Ratio</div>
+    </div>
+    <div class="slide">
+      <img src="5.avif" alt="Geometric Shapes And Golden Ratio">
+      <div class="caption">Golden Ratio In Geometric Shapes</div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <h2>The Beauty of Proportion</h2>
+    <p>The Golden Ratio can be expressed as <b>φ = (1 + √5) / 2</b>.  
+    It defines a perfect relationship where the smaller part relates to the larger part just as the larger part relates to the whole.  
+    This ratio appears in seashell spirals, galaxies, hurricanes, and even in the proportions of the human body and DNA.</p>
+
+    <p>Artists such as Leonardo da Vinci and architects throughout history have incorporated φ into their masterpieces — from the Parthenon to the Mona Lisa — celebrating the universal balance between mathematics and beauty.</p>
+  </div>
+
+  <footer>© 2025 The Golden Ratio Exploration Project</footer>
+
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    let index = 0;
+
+    function nextSlide() {
+      slides[index].classList.remove("active");
+      index = (index + 1) % slides.length;
+      slides[index].classList.add("active");
+    }
+
+    // Set interval to 1500 milliseconds (1.5 seconds)
+    setInterval(nextSlide, 1500);
+  </script>
+
+</body>
+</html>
