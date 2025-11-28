@@ -17,6 +17,33 @@
     overflow-x: hidden;
   }
 
+  /* --- Added Back Button Style --- */
+  .back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.15);
+    padding: 10px 22px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.35);
+    box-shadow: 0 0 10px rgba(255,255,255,0.25);
+    transition: 0.3s;
+    z-index: 1; /* ensures it never blocks canvas/UI */
+  }
+
+  .back-btn:hover {
+    background: white;
+    color: #0f2027;
+    box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    transform: scale(1.08);
+  }
+  /* -------------------------------- */
+
   h1 {
     font-size: 2.5em;
     margin-bottom: 10px;
@@ -119,6 +146,10 @@
 </style>
 </head>
 <body>
+
+  <!-- ⭐ Added Back Button ⭐ -->
+  <a href="index.html" class="back-btn">← Back</a>
+
   <h1>Pythagoras Theorem Visualizer</h1>
   <p>a² + b² = c²</p>
 
@@ -151,11 +182,9 @@
       result.style.opacity = 0;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // scaling & centering
       const maxSide = Math.max(a, b);
       const scale = 300 / (maxSide + 2);
 
-      // find offset so the triangle is centered
       const triWidth = a * scale;
       const triHeight = b * scale;
       const offsetX = (canvas.width - triWidth) / 2;
