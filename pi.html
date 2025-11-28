@@ -17,7 +17,7 @@
     overflow-x: hidden;
   }
 
-  /* --- Added Back Button --- */
+  /* --- Back Button --- */
   .back-btn {
     position: absolute;
     top: 20px;
@@ -227,28 +227,11 @@
       const data = await response.json();
       const digits = "π = " + data.content;
 
+      // ⭐ Single box only
       let box = document.createElement('div');
       box.className = 'piBox';
+      box.textContent = digits;
       container.appendChild(box);
-
-      let charsPerBox = 120; // max characters per line box
-      let i = 0;
-
-      function typeNext() {
-        if (i < digits.length) {
-          box.textContent += digits[i];
-          i++;
-          // Create new box when full
-          if (box.textContent.length >= charsPerBox && i < digits.length) {
-            box = document.createElement('div');
-            box.className = 'piBox';
-            container.appendChild(box);
-          }
-          requestAnimationFrame(typeNext);
-        }
-      }
-
-      typeNext();
     }
 
     drawCircle();
