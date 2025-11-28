@@ -227,11 +227,20 @@
       const data = await response.json();
       const digits = "π = " + data.content;
 
-      // ⭐ Single box only
+      // ⭐ Single box for all digits
       let box = document.createElement('div');
       box.className = 'piBox';
-      box.textContent = digits;
       container.appendChild(box);
+
+      // ⭐ Typing animation in one box
+      let i = 0;
+      function typeNext() {
+        if (i < digits.length) {
+          box.textContent += digits[i++];
+          requestAnimationFrame(typeNext);
+        }
+      }
+      typeNext();
     }
 
     drawCircle();
