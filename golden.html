@@ -79,12 +79,12 @@
     padding: 10px 0;
     font-size: 1em;
     font-weight: 500;
-    opacity: 0;
+    opacity: 0; /* start hidden */
     transition: opacity 1.5s ease-in-out;
   }
 
   .slide.active .caption {
-    opacity: 1;
+    opacity: 1; /* fade in with slide */
   }
 
   .info-section {
@@ -118,7 +118,7 @@
     </div>
     <div class="slide">
       <img src="1.png" alt="Sea Shell">
-      <div class="caption">Sea Shell's Internal Sturcture and φ</div>
+      <div class="caption">Sea Shell's Internal Structure and φ</div>
     </div>
     <div class="slide">
       <img src="2.png" alt="Human Fist">
@@ -153,13 +153,17 @@
     const slides = document.querySelectorAll(".slide");
     let index = 0;
 
+    // Show the first slide immediately
+    slides[index].classList.add("active");
+
     function nextSlide() {
       slides[index].classList.remove("active");
       index = (index + 1) % slides.length;
       slides[index].classList.add("active");
     }
 
-    setInterval(nextSlide, 3000);
+    // Slide every 2 seconds
+    setInterval(nextSlide, 2000);
   </script>
 
 </body>
